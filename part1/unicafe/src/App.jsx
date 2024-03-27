@@ -28,12 +28,18 @@ const Statistics = ({ good, neutral, bad }) => {
   return (
     <>
       <Header title="Statistics" />
-      <Results text="Good:" value={good} />
-      <Results text="Neutral:" value={neutral} />
-      <Results text="Bad:" value={bad} />
-      <Results text="Total:" value={total} />
-      <Results text="Promedio:" value={average || 0} />
-      <Results text="Positivos (%):" value={positives || 0} />
+      {total != 0 ? (
+        <>
+          <Results text="Good:" value={good} />
+          <Results text="Neutral:" value={neutral} />
+          <Results text="Bad:" value={bad} />
+          <Results text="Total:" value={total} />
+          <Results text="Average:" value={average || 0} />
+          <Results text="Positives (%):" value={positives || 0} />
+        </>
+      ) : (
+        <p>No feedback given</p>
+      )}
     </>
   );
 };
@@ -43,15 +49,14 @@ const App = () => {
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
+  const [isEmpty, setIsEmpty] = useState(true);
 
   return (
     <div>
       <Header title="Give feedback" />
-
       <Button onClick={() => setGood(good + 1)} text="Good" />
       <Button onClick={() => setNeutral(neutral + 1)} text="Neutral" />
       <Button onClick={() => setBad(bad + 1)} text="Bad" />
-
       <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   );
