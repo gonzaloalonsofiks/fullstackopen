@@ -8,9 +8,10 @@ const Header = ({ title }) => {
 // Componente de Resultados
 const Results = (props) => {
   return (
-    <p>
-      {props.text} {props.value}
-    </p>
+    <tr>
+      <td>{props.text}</td>
+      <td>{props.value}</td>
+    </tr>
   );
 };
 
@@ -30,12 +31,14 @@ const Statistics = ({ good, neutral, bad }) => {
       <Header title="Statistics" />
       {total != 0 ? (
         <>
-          <Results text="Good:" value={good} />
-          <Results text="Neutral:" value={neutral} />
-          <Results text="Bad:" value={bad} />
-          <Results text="Total:" value={total} />
-          <Results text="Average:" value={average || 0} />
-          <Results text="Positives (%):" value={positives || 0} />
+          <table cellPadding={3} cellSpacing={3}>
+            <Results text="Good:" value={good} />
+            <Results text="Neutral:" value={neutral} />
+            <Results text="Bad:" value={bad} />
+            <Results text="Total:" value={total} />
+            <Results text="Average:" value={average || 0} />
+            <Results text="Positives (%):" value={positives || 0} />
+          </table>
         </>
       ) : (
         <p>No feedback given</p>
