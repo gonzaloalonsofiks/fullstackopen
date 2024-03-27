@@ -9,7 +9,7 @@ const Header = ({ title }) => {
 const Results = (props) => {
   return (
     <p>
-      {props.score} {props.value}
+      {props.text} {props.value}
     </p>
   );
 };
@@ -24,6 +24,9 @@ const App = () => {
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
+  const total = good + neutral + bad;
+  const average = (good * 1 + neutral * 0 + bad * -1) / total;
+  const positives = (good / total) * 100;
 
   return (
     <div>
@@ -34,9 +37,12 @@ const App = () => {
       <Button onClick={() => setBad(bad + 1)} text="Bad" />
 
       <Header title="Statistics" />
-      <Results score="Good:" value={good} />
-      <Results score="Neutral:" value={neutral} />
-      <Results score="Bad:" value={bad} />
+      <Results text="Good:" value={good} />
+      <Results text="Neutral:" value={neutral} />
+      <Results text="Bad:" value={bad} />
+      <Results text="Total:" value={total} />
+      <Results text="Promedio:" value={average} />
+      <Results text="Positivos (%):" value={positives} />
     </div>
   );
 };
