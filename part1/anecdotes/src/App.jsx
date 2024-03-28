@@ -1,15 +1,17 @@
 import { useState } from "react";
 
+// Componente Botón
 const Button = ({ onClick, text }) => {
   return <button onClick={onClick}>{text}</button>;
 };
 
-const selectRandomQuote = (content) => {
-  const totalAnecdotes = content.length;
-  const min = Math.ceil(0);
-  const max = Math.floor(totalAnecdotes);
-  const randomNumber = Math.floor(Math.random() * (max - min) + min);
-  return randomNumber;
+// Componente que muestra los votos
+const Votes = ({ content, selected, points }) => {
+  return (
+    <div>
+      has <em>{points[selected].count}</em> votes
+    </div>
+  );
 };
 
 const App = () => {
@@ -25,15 +27,35 @@ const App = () => {
   ];
 
   const [selected, setSelected] = useState(0);
+  const [points, setPoints] = useState(new Array(anecdotes.length).fill(0));
+
+  // Función para votar
+  const addVote = (index) => {
+    const newPoints = [...points];
+    newPoints[index]++;
+    setPoints(newPoints);
+    console.log("Voted for", index);
+    console.log(newPoints);
+  };
+
+  // Función que selecciona un número random entre los elementos del array
+  const selectRandom = () => {
+    const totalItems = anecdotes.length;
+    const min = Math.ceil(0);
+    const max = Math.floor(totalItems);
+    const randomNumber = Math.floor(Math.random() * (max - min) + min);
+    return randomNumber;
+  };
 
   return (
     <>
-      {anecdotes[selected]}
-      <br />
+      <div>{anecdotes[selected]}</div>
+      <Votes content={anecdotes} selected={selected} points={points} />
+
+      <Button text="Vote" onClick={() => addVote(selected)} />
       <Button
         text="Next anecdote"
-        content={anecdotes}
-        onClick={() => setSelected(selectRandomQuote(anecdotes))}
+        onClick={() => setSelected(selectRandom())}
       />
     </>
   );
